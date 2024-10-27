@@ -13,7 +13,7 @@ const OrderStatus = () => {
   const Orders = async () => {
     const token = authService.getToken();
     axios
-      .get("https://campus-food-delivery.onrender.com/api/ResOrder", {
+      .get(`${process.env.REACT_APP_LOCAL_URL}/ResOrder`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -38,8 +38,7 @@ const OrderStatus = () => {
     updatedFoodlist[index].accept = !updatedFoodlist[index].accept;
     setFoodlist(updatedFoodlist);
   };
- 
-  
+
   const handleOrder = async () => {
     try {
       const token = authService.getToken();
@@ -48,7 +47,7 @@ const OrderStatus = () => {
         token,
       };
       const response = await axios.post(
-        "https://campus-food-delivery.onrender.com/api/updateOrder",
+        `${process.env.REACT_APP_LOCAL_URL}/updateOrder`,
         data,
         {
           headers: {
@@ -56,7 +55,7 @@ const OrderStatus = () => {
           },
         }
       );
-     // console.log("order confirmed", response);
+      // console.log("order confirmed", response);
     } catch (error) {
       console.log("error", error);
     }
@@ -78,10 +77,14 @@ const OrderStatus = () => {
         <tbody>
           {foodlist.map((item, index) => (
             <tr key={item._id} className="hover:bg-gray-700">
-              <td className="border border-gray-700 px-4 py-2">{item.dishName}</td>
+              <td className="border border-gray-700 px-4 py-2">
+                {item.dishName}
+              </td>
               <td className="border border-gray-700 px-4 py-2">{item.price}</td>
               <td className="border border-gray-700 px-4 py-2">{item.ph}</td>
-              <td className="border border-gray-700 px-4 py-2">{item.quantity}</td>
+              <td className="border border-gray-700 px-4 py-2">
+                {item.quantity}
+              </td>
               <td className="border border-gray-700 px-4 py-2">
                 <button
                   className={`${

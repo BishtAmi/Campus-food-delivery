@@ -1,23 +1,45 @@
 import React, { useEffect, useState } from "react";
-import { jwtDecode } from "jwt-decode";
+import { jwtDecode } from "jwt-decode"; // Make sure to import jwtDecode correctly
 import axios from "axios";
 import { authService } from "../services/authServices";
+
 const UserProfile = () => {
-  const [user, setUser] = useState("");
+  const [user, setUser] = useState(null); // Initialize as null for better conditional rendering
+  const [error, setError] = useState("");
   const token = authService.getToken();
-  const payLoad = jwtDecode(token);
+  console.log("token", token);
+  let payLoad;
+  if (token) {
+    try {
+      payLoad = jwtDecode(token);
+    } catch (err) {
+      console.error("Invalid token:", err.message);
+      setError("Invalid token. Please log in again.");
+    }
+  } else {
+    setError("No token found. Please log in.");
+  }
+
   const phone = payLoad?.ph;
+
   useEffect(() => {
+    if (!phone) return;
+
     axios
-      // .get(`http://localhost:8001/api/getAllDishes/${phone}`)
-      .get(`https://campus-food-delivery.onrender.com/api/userInfo/${phone}`)
+      .get(`${process.env.REACT_APP_LOCAL_URL}/userInfo/${phone}`)
       .then((response) => {
-       // console.log("response", response.data);
         setUser(response.data[0]);
-        // console.log("User", user);
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, [phone]);
+
+  if (error) {
+    return <div className="error">{error}</div>;
+  }
+
+  if (!user) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="h-screen flex flex-col text-black justify-center items-center bg-gray-100">

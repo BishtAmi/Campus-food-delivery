@@ -4,10 +4,10 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const routes = require("./routes/routes");
 const app = express();
-const cookieParser = require('cookie-parser');
+const cookieParser = require("cookie-parser");
 
 mongoose
-  .connect("mongodb+srv://hemuchoudhary231:Hemant231@cluster0.uyzk45x.mongodb.net", {})
+  .connect(process.env.DB_URL, {})
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.error(err));
 app.use(cors());

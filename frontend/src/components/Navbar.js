@@ -1,18 +1,26 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser, faSignInAlt } from "@fortawesome/free-solid-svg-icons"; // Importing the icons
 import logo from "../images/logo.png";
-import image from "../images/image.png";
 import { authService } from "../services/authServices.js";
 
 const Navbar = () => {
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
   const isLoggedIn = authService.isLoggedIn();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   const homeNavigate = () => {
     navigate("/");
   };
+
   const handleLogout = () => {
     authService.logOut();
-    navigate("/Login"); // Navigate to Login page after logout
+    navigate("/Login");
+  };
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
   };
 
   return (
@@ -26,30 +34,56 @@ const Navbar = () => {
             </button>
           </h1>
         </div>
-        <ul className="flex">
+
+        {/* Hamburger Menu for mobile */}
+        <button
+          className="lg:hidden ml-2 p-2 rounded focus:outline-none"
+          onClick={toggleMenu}
+        >
+          {isMenuOpen ? "✖️" : "☰"}
+        </button>
+
+        <ul
+          className={`flex-col lg:flex-row lg:flex lg:items-center lg:static absolute lg:top-auto lg:left-auto bg-white lg:bg-transparent transition-transform duration-300 transform ${
+            isMenuOpen ? "top-14 left-0 w-full" : "top-[-100%]"
+          }`}
+        >
           {isLoggedIn ? (
             <>
               <li className="mr-4 text-2xl">
-                <button type="button" onClick={handleLogout}>
+                <button
+                  type="button"
+                  onClick={handleLogout}
+                  className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
+                >
                   Logout
                 </button>
               </li>
               <li className="mr-4 text-2xl">
-                <Link
-                  to="/userProfile"
-                  onClick={() => navigate("/userProfile")}
-                >
-                  Profile
+                <Link to="/userProfile" onClick={() => navigate("/userProfile")}>
+                  <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">
+                    Profile
+                  </button>
                 </Link>
               </li>
             </>
           ) : (
             <>
-              <li className="mr-4 text-2xl">
-                <Link to="/Login">Login</Link>
+              <li className="mr-4 text-2xl flex items-center">
+                <FontAwesomeIcon icon={faSignInAlt} className="mr-2" />
+                <Link to="/Login">
+                  <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">
+                    Login
+                  </button>
+                </Link>
               </li>
-              <li className="mr-4 text-2xl">
-                <Link to="/Register">Register</Link>
+              <li className="mr-4 text-2xl flex items-center">
+                <FontAwesomeIcon icon={faUser} className="mr-2" />
+                <Link to="/Register">
+                  <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">
+                    Register
+                  </button>
+                </Link>
               </li>
             </>
           )}
@@ -60,3 +94,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+

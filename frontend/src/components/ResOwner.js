@@ -16,9 +16,7 @@ const ResOwner = () => {
   useEffect(() => {
     // Use Axios for fetching data
     axios
-      .get(
-        `https://campus-food-delivery.onrender.com/api/getAllDishes/${phone}`
-      )
+      .get(`${process.env.REACT_APP_LOCAL_URL}/getAllDishes/${phone}`)
       .then((response) => {
         setData(response.data);
         //console.log("data", response.data);
@@ -55,7 +53,7 @@ const ResOwner = () => {
       const deldata = JSON.stringify(requestData);
       //console.log("req", requestData);
       const response = await axios.post(
-        "https://campus-food-delivery.onrender.com/api/deletedishes",
+        `${process.env.REACT_APP_LOCAL_URL}/deletedishes`,
         requestData
       );
 
@@ -80,7 +78,7 @@ const ResOwner = () => {
     try {
       const token = authService.getToken();
       axios.post(
-        "https://campus-food-delivery.onrender.com/api/adddish",
+        `${process.env.REACT_APP_LOCAL_URL}/adddish`,
         {
           dishName,
           dishPrice,

@@ -21,7 +21,7 @@ const Admin = () => {
 
   const getAllrestaurent = async () => {
     axios
-      .get("https://campus-food-delivery.onrender.com/api/getAllRes")
+      .get(`${process.env.REACT_APP_LOCAL_URL}/getAllRes`)
       .then((response) => {
         setData(response.data);
         const initializedFoodlist = response.data.map((item) => ({
@@ -44,7 +44,7 @@ const Admin = () => {
       //console.log("Data from frontend :", data);
 
       const response = await axios.post(
-        "https://campus-food-delivery.onrender.com/api/deleteRes",
+        `${process.env.REACT_APP_LOCAL_URL}/deleteRes`,
         data,
         {
           headers: {
@@ -64,7 +64,7 @@ const Admin = () => {
     try {
       const token = authService.getToken();
       const response = await axios.post(
-        "https://campus-food-delivery.onrender.com/api/addRes",
+        `${process.env.REACT_APP_LOCAL_URL}/addRes`,
         {
           name,
           owner,

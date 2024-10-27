@@ -1,22 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { authService } from "../services/authServices";
 import { toast } from "react-toastify";
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   handleLogin();
-  // }, []);
-
   const handleLogin = async () => {
     try {
       const userData = { email, password };
       const response = await axios.post(
-        "https://campus-food-delivery.onrender.com/api/login",
+        `${process.env.REACT_APP_LOCAL_URL}/login`,
         userData
       );
       const user = response.data.user.role;
@@ -42,11 +39,11 @@ const Login = () => {
   };
 
   return (
-    <div className="h-screen flex flex-col justify-center items-center">
-      <h1 className="text-4xl mb-8">User Login Portal</h1>
-      <div className="bg-slate-700 p-6 rounded-lg shadow-md w-80">
+    <div className="h-screen flex flex-col justify-center items-center px-4 sm:px-8">
+      <h1 className="text-4xl mb-8 text-center">Login</h1>
+      <div className="bg-slate-700 p-6 sm:p-8 rounded-lg shadow-md w-full max-w-sm md:max-w-md lg:max-w-lg">
         {/* Email input */}
-        <label className="block mb-2">Email</label>
+        <label className="block mb-2 text-white">Email</label>
         <input
           className="w-full border border-gray-300 text-black rounded-md px-3 py-2 mb-4"
           type="email"
@@ -55,7 +52,7 @@ const Login = () => {
           onChange={(e) => setEmail(e.target.value)}
         />
         {/* Password input */}
-        <label className="block mb-2">Password</label>
+        <label className="block mb-2 text-white">Password</label>
         <input
           className="w-full border border-gray-300 text-black rounded-md px-3 py-2 mb-4"
           type="password"
@@ -65,13 +62,13 @@ const Login = () => {
         />
         {/* Login button */}
         <button
-          className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4"
           onClick={handleLogin}
         >
           Login
         </button>
         {/* Register button */}
-        <Link to="/Register" className="mt-4 block text-center">
+        <Link to="/Register" className="block text-center">
           <button className="w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
             Register
           </button>

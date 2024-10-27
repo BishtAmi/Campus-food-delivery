@@ -1,4 +1,5 @@
 import { jwtDecode } from 'jwt-decode';
+import "core-js/stable/atob";
 import axiosInstance from '../axios/axiosInstance';
 const setToken = (token) => {
   localStorage.setItem("token", token);

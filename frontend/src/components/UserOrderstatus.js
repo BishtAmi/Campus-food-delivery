@@ -13,14 +13,14 @@ const UserOrderStatus = () => {
     const token = authService.getToken();
     //console.log("Token for user is ", token);
     axios
-      .get("https://campus-food-delivery.onrender.com/api/userOrder", {
+      .get(`${process.env.REACT_APP_LOCAL_URL}/userOrder `, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => {
         setData(response.data);
-       // console.log("User Order Data ", response);
+        // console.log("User Order Data ", response);
         const initializedFoodlist = response.data.map((item) => ({
           _id: item._id,
           dishName: item.dishName,

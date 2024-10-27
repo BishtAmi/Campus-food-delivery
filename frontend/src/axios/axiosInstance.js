@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "https://campus-food-delivery.onrender.com/api",
+  baseURL: process.env.REACT_APP_LOCAL_URL,
 });
 
 export default axiosInstance;

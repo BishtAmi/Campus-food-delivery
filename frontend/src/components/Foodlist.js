@@ -8,23 +8,22 @@ const Foodlist = () => {
   const { phone } = useParams();
   const [foodlist, setFoodlist] = useState([]);
   const [data, setData] = useState([]);
- // console.log("phone number of restaurant is ", phone);
+  // console.log("phone number of restaurant is ", phone);
   // console.log("food list is ", foodlist);
 
   useEffect(() => {
     // Use Axios for fetching data
     axios
-      // .get(`http://localhost:8001/api/getAllDishes/${phone}`)
-      .get(`https://campus-food-delivery.onrender.com/api/getAllDishes/${phone}`)
+      .get(`${process.env.REACT_APP_LOCAL_URL}/getAllDishes/${phone}`)
       .then((response) => {
         setData(response.data);
-       // console.log("Response from ", response.data);
+        // console.log("Response from ", response.data);
         const initializedFoodlist = response.data.map((item) => ({
           ...item,
           selected: false,
         }));
         setFoodlist(initializedFoodlist);
-       // console.log("food list is now after setting ", foodlist);
+        // console.log("food list is now after setting ", foodlist);
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, [phone]);
@@ -55,7 +54,7 @@ const Foodlist = () => {
       // console.log("Data for backend :", data);
       // Use Axios for the POST request with proper headers
       const response = await axios.post(
-        "https://campus-food-delivery.onrender.com/api/sendOrder",
+        `${process.env.REACT_APP_LOCAL_URL}/sendOrder`,
         data,
         {
           headers: {
@@ -91,7 +90,6 @@ const Foodlist = () => {
               <td className="p-2">{item.ph}</td>
               <td className="p-2">
                 <input
-                  
                   type="number"
                   value={foodlist[index].quantity}
                   onChange={(e) =>

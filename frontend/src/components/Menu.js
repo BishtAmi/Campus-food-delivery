@@ -8,11 +8,14 @@ const RestaurantList = () => {
   const [restaurants, setRestaurants] = useState([]);
   const { phone } = useParams();
   //console.log("Phone number of restaurant is: ", phone);
-  
+
   useEffect(() => {
-    axios.get("https://campus-food-delivery.onrender.com/api/getAllRes")
+    axios
+      .get(`${process.env.REACT_APP_LOCAL_URL}/getAllRes`)
       .then((response) => setRestaurants(response.data))
-      .catch((error) => console.error("Error fetching restaurant data:", error));
+      .catch((error) =>
+        console.error("Error fetching restaurant data:", error)
+      );
   }, []);
 
   return (
@@ -41,7 +44,9 @@ const RestaurantList = () => {
               </div>
             </div>
             <div className="p-4">
-              <h2 className="text-xl font-semibold text-white mb-2">{restaurant.name}</h2>
+              <h2 className="text-xl font-semibold text-white mb-2">
+                {restaurant.name}
+              </h2>
               <p className="text-gray-400">{restaurant.description}</p>
             </div>
           </div>

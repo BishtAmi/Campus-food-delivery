@@ -50,7 +50,8 @@ router.post(
   },
   auth.signup
 );
-
+router.post("/verifyOTP", auth.verifyOTP);
+router.post("/verifyEmail", auth.verifyMail);
 router.post("/login", auth.login);
 router.post("/auth", verifyuser, auth.verifyUser);
 //User
@@ -65,6 +66,7 @@ router.post("/payment", User.payment);
 // any one can view
 // All Restaurant Data
 router.get("/getAllRes", User.getAllRes);
+
 // All dishes of a Specific Restaurant
 router.get("/getAllDishes/:phone", User.getAllDishes);
 

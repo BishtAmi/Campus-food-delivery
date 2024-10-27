@@ -9,7 +9,7 @@ const RestaurantList = () => {
 
   useEffect(() => {
     axios
-      .get("https://campus-food-delivery.onrender.com/api/getAllRes")
+      .get(`${process.env.REACT_APP_LOCAL_URL}/getAllRes`)
       .then((response) => setRestaurants(response.data))
       .catch((error) =>
         console.error("Error fetching restaurant data:", error)
@@ -26,7 +26,10 @@ const RestaurantList = () => {
     <div className="bg-black text-white py-10 px-4 md:px-10 lg:px-20 mt-16">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold mb-6">Restaurants Nearby</h1>
-        <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded" onClick={handelMyorders}>
+        <button
+          className="bg-blue-500 text-white font-bold py-2 px-4 rounded"
+          onClick={handelMyorders}
+        >
           My Orders
         </button>
       </div>
