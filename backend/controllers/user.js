@@ -18,7 +18,7 @@ async function payment(req, res) {
   try {
     const { name, amount } = req.body;
     const s = await stripe.checkout.sessions.retrieve(
-      "cs_live_a10jNPXlJeUEA6nNa4co6kgBbuwWvsCfLZ9tb1fNznnBZnq3wvYNTEWR6C"
+      // retrieve key
     );
 
     console.log("session", s);
@@ -93,7 +93,7 @@ async function getUser(req, res) {
 
 async function getAllRes(req, res) {
   try {
-    const key = "ami";
+    const key = process.env.REDISKEY;
     const data = await redisClient.get(key);
     if (data) {
       res.json(JSON.parse(data));
